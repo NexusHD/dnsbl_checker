@@ -5,10 +5,11 @@
     <title></title>
   </head>
   <body>
+    <a id="backward" class="btn-floating btn-large waves-effect waves-light red tooltipped" data-position="right" data-delay="50" data-tooltip="Züruck" style="margin-left:4%; margin-top:2%;"><i class="material-icons">reply</i></a>
     <?php $y=1 ?>
     @foreach($ip_listed_upload as $ip)
       @if (!empty($ip) && $y)
-    <table class= "w3-table-all">
+    <table class= "highlight">
       <tr>
         <th>Blacklist</th>
         <th>Gelistete IP aus Datei</th>
@@ -34,7 +35,7 @@
     <?php $y=1 ?>
     @foreach($domain_listed_upload as $domain)
       @if (!empty($domain) && $y)
-    <table class= "w3-table-all">
+    <table class= "highlight">
       <tr>
         <th>Blacklist</th>
         <th>Gelistete Domain</th>
@@ -57,5 +58,34 @@
     <?php $y=0 ?>
     @endif
     @endforeach
+    <script>
+        $(document).ready(function() {
+$('.tooltipped').tooltip({delay: 50});
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+$('#backward').click(function() {
+$('.tooltipped').tooltip('remove');
+$.ajax({
+url: 'show',
+type: 'get',
+})
+.done(function(t) {
+console.log("success");
+$('div#ergebniss').html(t);
+})
+.fail(function() {
+console.log("error");
+})
+.always(function() {
+console.log("complete");
+});
+});
+
+
+});
+</script>
   </body>
 </html>

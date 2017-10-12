@@ -8,7 +8,7 @@
     <?php $y=1 ?>
     @foreach($domain_listed_query as $domain)
     @if (!empty($domain) && $y)
-    <table class= "w3-table-all">
+    <table class= "highlight">
       <tr>
         <th>Blacklist</th>
         <th>Gelistete Domain</th>
@@ -75,7 +75,7 @@
   <?php $y=1 ?>
   @foreach($ip_listed_query as $ip)
   @if (!empty($ip) && $y)
-  <table class= "w3-table-all">
+  <table class= "highlight">
     <tr>
       <th>Blacklist</th>
       <th>Gelistete IP</th>
@@ -96,7 +96,7 @@
       @foreach($ip_listed_query as $ip)
         @if($ip->ip_dnsbls_id==$ip_dnsbl->id)
           @if($ip -> checked)
-          
+
             <div class="switch">
               <label>
                 Off
@@ -122,23 +122,21 @@
     @endforeach
   </table>
   <?php $y=0 ?>
+  </br></br></br>
   @endif
   @endforeach
-</br></br></br>
-
-
 
 
 
     <?php $y=1 ?>
     @foreach($data_uploads as $data)
       @if (!empty($data->listed_domain) && $y || !empty($data->listed_ip) && $y)
-    <table class= "w3-table-all">
+    <table class= "highlight">
       <tr>
         <th>Datein in dennen etwas gelistet ist</th>
       </tr>
       <tr>
-      <td><a href="data_listed/{{$data->id}}">{{ $data->original_name.".".$data->data_typ }}</a></br>{{ $data->query }}</td>
+      <td id="{{$data->id}}" class="data_detail_ansicht"><a style="cursor: pointer;">{{ $data->original_name.".".$data->data_typ }}</br>{{ $data->query }}</td>
     </tr>
     </table>
     </br></br></br>
@@ -153,7 +151,6 @@
     <script>
 
         $(document).ready(function() {
-
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -201,6 +198,30 @@ console.log("error");
 console.log("complete");
 });
 });
+
+
+$('.data_detail_ansicht').click(function() {
+  $('div#ergebniss').html("warte");
+ var id = $(this).attr('id');
+$.ajax({
+  url: 'show/detail',
+  type: 'POST',
+  dataType: 'html',
+  data:{id: id}
+})
+.done(function(t) {
+  console.log("success");
+  $('div#ergebniss').html(t);
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+});
+
+
 });
 </script>
   </body>
