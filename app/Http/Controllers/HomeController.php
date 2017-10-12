@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\DB;
+use App\repeat;
 class HomeController extends Controller
 {
     /**
@@ -24,6 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+      if ($id_user = Auth::user()->id) {
+        $select_repeat_status=repeat::select('repeat')
+        ->where('users_id', '=', $id_user)
+        ->get();
+        return view('home', compact('select_repeat_status'));
+      }
+
+
         return view('home');
     }
 

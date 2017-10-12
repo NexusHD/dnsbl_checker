@@ -31,7 +31,7 @@ Route::post('/active', 'domain_controller@show_active_domain_w_input');
 Route::post('/delet', 'domain_controller@show_del_domain_w_input');
 Route::get('/logout', 'HomeController@logout');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
 Route::post('/active_data', 'upload_controller@update_active_upload_data');
 
