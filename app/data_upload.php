@@ -8,4 +8,3 @@ class data_upload extends Model
 {
     //
 }
-w
