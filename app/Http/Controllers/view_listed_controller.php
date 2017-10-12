@@ -97,7 +97,8 @@ class view_listed_controller extends Controller
                                  ->get();
       return view('view_listed_sub_domain_ip', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'subdomain_listed_query', 'sub_ip_listed_query'));
     }
-    public function show_listed_data($id){
+    public function show_listed_data(Request $request){
+      $id = $request->id;
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_listed_upload=user::select('ips.ip_address', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ')
