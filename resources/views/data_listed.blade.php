@@ -79,6 +79,7 @@
         <td>
         @foreach($domain_listed_upload as $domain)
           @if($domain->ip_dnsbls_id==$domain_dnsbl->id)
+
             @if($domain -> checked)
               <div class="switch">
                 <label>
