@@ -89,7 +89,6 @@
       <div class="vertical-navigations animated">
         <ul class="side-nav fixed animated collapsible collapsible-accordion" id="nav-default">
           <li class="usr-profile">
-            <div class="usr-profile-header"><a href="#"><img class="circle" src="img/placeholder/50x50g.jpg" alt="Thor"></a></div>
             <ul class="user-options">
               <li class="waves-effect waves-set"><span class="usr-name">{{ Auth::user()->name }}</span></li>
               <li class="user-option-item waves-effect waves-set"><a class="btn-floating btn-small waves-effect waves-light" href="#"><i class="material-icons">lock</i></a></li>
