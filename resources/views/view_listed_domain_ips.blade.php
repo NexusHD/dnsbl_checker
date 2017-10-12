@@ -36,7 +36,6 @@
         @endforeach
         </td>
         <td>
-          asd
         @foreach($domain_listed_query as $domain)
           @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
             @if($domain -> checked)
@@ -94,7 +93,6 @@
       @endforeach
       </td>
       <td>
-        asd
       @foreach($ip_listed_query as $ip)
         @if($ip->ip_dnsbls_id==$ip_dnsbl->id)
           @if($ip -> checked)

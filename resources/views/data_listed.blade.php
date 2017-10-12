@@ -26,6 +26,7 @@
         @endforeach
         </td>
         <td>
+          asdasdasfasfaffas
         @foreach($ip_listed_upload as $ip)
           @if($ip->ip_dnsbls_id==$ip->id)
             @if($ip -> checked)
