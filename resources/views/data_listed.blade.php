@@ -20,16 +20,15 @@
        <td><a href="{{ $ip_dnsbl->link }}" target="_blank">{{$ip_dnsbl->name}}</a></br>{{ $ip_dnsbl->query}}</td>
         <td>
         @foreach($ip_listed_upload as $ip)
-          @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )</br>
-            {{$ip->ip_address}}
+          @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )
+            {{$ip->ip_address}}</br>
           @endif
         @endforeach
         </td>
         <td>
-          asdasdasfasfaffas
         @foreach($ip_listed_upload as $ip)
-          @if($ip->ip_dnsbls_id==$ip->id)
-            @if($ip -> checked)
+          @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )
+            @if($ip->checked)
               <div class="switch">
                 <label>
                   Off
@@ -72,7 +71,7 @@
        <td><a href="{{ $domain_dnsbl->link }}" target="_blank">{{ $domain_dnsbl->name }}</a></br>{{ $domain_dnsbl->query }}</td>
         <td>
         @foreach($domain_listed_upload as $domain)
-          @if( $domain->domain_dnsbls_id == $domain_dnsbl -> id )
+          @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
             {{$domain->domain}}</br>
           @endif
         @endforeach
