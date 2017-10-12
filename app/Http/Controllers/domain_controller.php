@@ -91,7 +91,7 @@ class domain_controller extends Controller
     public function show_active_domain()
     {
         $id_user = Auth::user()->id;
-        $domains=domain::select('domains.id','domain', 'active', 'checked')
+        $domains=domain::select('domains.id','domain', 'active')
                        ->join('domain_users', 'domain_users.domain_id', '=', 'domains.id')
                        ->join('users', 'users.id', '=', 'domain_users.users_id')
                        ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')
@@ -101,7 +101,7 @@ class domain_controller extends Controller
                        ->get();
         Session::reflash();
         Session::put('domains', $domains);
-        $data_domains=domain::select('data_uploads.active', 'data_domain_users.active', 'domains.id','domain', 'data_uploads.original_name', 'data_uploads.data_typ', 'checked')
+        $data_domains=domain::select('data_uploads.active', 'data_domain_users.active', 'domains.id','domain', 'data_uploads.original_name', 'data_uploads.data_typ')
                             ->join('data_domain_users', 'domains.id', '=', 'data_domain_users.domains_id')
                             ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')
                             ->join('data_uploads', 'data_domain_users.data_uploads_id', '=', 'data_uploads.id')

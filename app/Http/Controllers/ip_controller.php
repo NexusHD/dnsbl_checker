@@ -142,7 +142,7 @@ class ip_controller extends Controller
                ->where('users.id', $id_user)
                ->distinct()
                ->get();
-        $data_ips=ip::select('data_ip_users.active', 'ips.id', 'ip_address', 'data_uploads.original_name', 'data_uploads.data_typ', 'checked')
+        $data_ips=ip::select('data_ip_users.active', 'ips.id', 'ip_address', 'data_uploads.original_name', 'data_uploads.data_typ')
                     ->join('data_ip_users', 'ips.id', '=', 'data_ip_users.ips_id')
                     ->join('data_uploads', 'data_ip_users.data_uploads_id', '=', 'data_uploads.id')
                     ->join('ip_listeds', 'ips.id', '=', 'ip_listeds.ips_id')
