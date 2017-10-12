@@ -13,7 +13,7 @@
       <tr>
         <th>Blacklist</th>
         <th>Gelistete IP aus Datei</th>
-        <th>Datei</th>
+        <th>Checked</th>
       </tr>
       @foreach($ip_dnsbl_query as $ip_dnsbl)
       <tr>
@@ -38,8 +38,8 @@
     <table class= "highlight">
       <tr>
         <th>Blacklist</th>
-        <th>Gelistete Domain</th>
-        <th>Datei</th>
+        <th>Gelistete Domain aus datei</th>
+        <th>Checked</th>
       </tr>
       @foreach($domain_dnsbl_query as $domain_dnsbl)
       <tr>
