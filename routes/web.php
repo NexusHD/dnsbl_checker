@@ -17,7 +17,6 @@ Route::get('/', function () {
 Route::get('/add_ip_domain', function () {
     return view('/add_ip_domain');
 });
-
 Auth::routes();
 Route::get('/data_listed/{id}', 'view_listed_controller@show_listed_data');
 Route::post('/upload_data', 'upload_controller@upload');

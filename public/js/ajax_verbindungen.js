@@ -43,6 +43,26 @@ $(document).ready(function() {
       console.log("complete");
     });
   });
+  ///////////////////////////////////add_ip_domain//////////////////////////////////////
+          $('li#add_ip_domain').click(function() {
+            $('div#ergebniss').html("warte");
+
+
+          $.ajax({
+            url: 'add_ip_domain',
+            type: 'GET'
+          })
+          .done(function(t) {
+            console.log("success");
+            $('div#ergebniss').html(t);
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          .always(function() {
+            console.log("complete");
+          });
+        });
 
   // <button id='quit_scan' name='button'>Scan Abbrechen</button>
 });
