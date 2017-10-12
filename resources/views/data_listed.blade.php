@@ -32,7 +32,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" checked="checked" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="domain_checked">
+                  <input type="checkbox" checked="checked" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="ip_data_checked">
                   <span class="lever"></span>
                   On
                 </label>
@@ -41,7 +41,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="domain_checked" >
+                  <input type="checkbox" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="ip_data_checked" >
                   <span class="lever"></span>
                   On
                 </label>
@@ -72,19 +72,18 @@
         <td>
         @foreach($domain_listed_upload as $domain)
           @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
-            {{$domain->domain}}</br>
+            {{$domain->domain}}</br>{{ $domain->id }}/{{$domain_dnsbl->id}}</br>
           @endif
         @endforeach
         </td>
         <td>
         @foreach($domain_listed_upload as $domain)
-          @if($domain->ip_dnsbls_id==$domain_dnsbl->id)
-
+          @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
             @if($domain -> checked)
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked">
+                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_data_checked">
                   <span class="lever"></span>
                   On
                 </label>
@@ -93,7 +92,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked" >
+                  <input type="checkbox" value="{{$domain->id}}/{{$domain_dnsbl->id}}" class="domain_data_checked" >
                   <span class="lever"></span>
                   On
                 </label>
@@ -135,6 +134,53 @@ console.log("complete");
 });
 });
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+$('input.domain_data_checked').click(function() {
+var str  = $(this).val();
+var id   = str.split('/');
+console.log(id[1]);
+$.ajax({
+url: 'domain_data_checked',
+type: 'POST',
+dataType: 'html',
+data:{id: id[0], dnsbl_id: id[1]}
+})
+.done(function(t) {
+console.log("success");
+$('div#ergebniss').html(t);
+})
+.fail(function() {
+console.log("error");
+})
+.always(function() {
+console.log("complete");
+});
+});
+////////////////////////////////////////////////////////////////////////////////
+$('input.ip_data_checked').click(function() {
+var str  = $(this).val();
+var id   = str.split('/');
+console.log(id[1]);
+$.ajax({
+url: 'ip_data_checked',
+type: 'POST',
+dataType: 'html',
+data:{id: id[0], dnsbl_id: id[1]}
+})
+.done(function(t) {
+console.log("success");
+$('div#ergebniss').html(t);
+})
+.fail(function() {
+console.log("error");
+})
+.always(function() {
+console.log("complete");
+});
+});
 
 });
 </script>

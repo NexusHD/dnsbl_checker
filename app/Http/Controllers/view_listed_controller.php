@@ -8,6 +8,7 @@ use App\domain;
 use App\user;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Session;
 
 class view_listed_controller extends Controller
 {
@@ -99,9 +100,11 @@ class view_listed_controller extends Controller
     }
     public function show_listed_data(Request $request){
       $id = $request->id;
+      Session::reflash();
+      Session::put('id_detail_listed_data_ip_domain', $id);
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
-      $ip_listed_upload=user::select('ips.ip_address', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'ip_listeds.checked')
+      $ip_listed_upload=user::select('ips.ip_address', 'ips.id', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'ip_listeds.checked')
       	                     ->join('data_ip_users', 'users.id', '=', 'data_ip_users.users_id')
                              ->join('ips', 'data_ip_users.ips_id', '=', 'ips.id')
                              ->join('ip_listeds', 'ips.id', '=', 'ip_listeds.ips_id')
@@ -111,7 +114,33 @@ class view_listed_controller extends Controller
                              ->where('data_ip_users.active', '=', '1')
                              ->where('data_uploads.id', '=', $id)
                              ->get();
-      $domain_listed_upload=user::select('domains.domain', 'domains.id', 'domain_listeds.domain_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'domain_listeds.checked')
+      $domain_listed_upload=user::select('domains.domain', 'domains.id', 'domains.id', 'domain_listeds.domain_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'domain_listeds.checked')
+      	                         ->join('data_domain_users', 'users.id', '=', 'data_domain_users.users_id')
+                                 ->join('domains', 'data_domain_users.domains_id', '=', 'domains.id')
+                                 ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')
+                                 ->join('data_uploads', 'data_domain_users.data_uploads_id', '=', 'data_uploads.id')
+                                 ->where('domain_listeds.listed', '=', '1')
+                                 ->where('data_domain_users.deleted', '=', '0')
+                                 ->where('data_domain_users.active', '=', '1')
+                                 ->where('data_uploads.id', '=', $id)
+                                 ->get();
+      return view('data_listed', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'ip_listed_upload', 'domain_listed_upload'));
+    }
+    public function show_listed_data_redirect(){
+      $id = Session::get('id_detail_listed_data_ip_domain');
+      $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
+      $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
+      $ip_listed_upload=user::select('ips.ip_address', 'ips.id', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'ip_listeds.checked')
+      	                     ->join('data_ip_users', 'users.id', '=', 'data_ip_users.users_id')
+                             ->join('ips', 'data_ip_users.ips_id', '=', 'ips.id')
+                             ->join('ip_listeds', 'ips.id', '=', 'ip_listeds.ips_id')
+                             ->join('data_uploads', 'data_ip_users.data_uploads_id', '=', 'data_uploads.id')
+                             ->where('ip_listeds.listed', '=', '1')
+                             ->where('data_ip_users.deleted', '=', '0')
+                             ->where('data_ip_users.active', '=', '1')
+                             ->where('data_uploads.id', '=', $id)
+                             ->get();
+      $domain_listed_upload=user::select('domains.domain', 'domains.id', 'domains.id', 'domain_listeds.domain_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'domain_listeds.checked')
       	                         ->join('data_domain_users', 'users.id', '=', 'data_domain_users.users_id')
                                  ->join('domains', 'data_domain_users.domains_id', '=', 'domains.id')
                                  ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')
