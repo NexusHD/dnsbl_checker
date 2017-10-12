@@ -2,7 +2,6 @@
 
 @section('content')
 @foreach ($select_repeat_status as $status)
-{{$status->repeat}}
 @if ($status->repeat == '1')
   <button id="scan" class="waves-effect waves-light btn-large" name="button">Scan Abbrechen</button>
 @endif
