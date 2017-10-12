@@ -17,22 +17,22 @@
       </tr>
       @foreach($ip_dnsbl_query as $ip_dnsbl)
       <tr>
-       <td><a href="{{ $ip_dnsbl->link }}" target="_blank">{{ $ip_dnsbl->name }}</a></br>{{ $ip_dnsbl->query }}</td>
+       <td><a href="{{ $ip_dnsbl->link }}" target="_blank">{{$ip_dnsbl->name}}</a></br>{{ $ip_dnsbl->query}}</td>
         <td>
         @foreach($ip_listed_upload as $ip)
-          @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )
-            {{ $ip->ip_address }}</br>
+          @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )</br>
+            {{$ip->ip_address}}
           @endif
         @endforeach
         </td>
-</td>
+        <td>
         @foreach($ip_listed_upload as $ip)
           @if($ip->ip_dnsbls_id==$ip->id)
             @if($ip -> checked)
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" checked="checked" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="domain_checked">
+                  <input type="checkbox" checked="checked" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="domain_checked">
                   <span class="lever"></span>
                   On
                 </label>
@@ -41,7 +41,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="domain_checked" >
+                  <input type="checkbox" value="{{$ip->id}}/{{$ip_dnsbl->id}}" class="domain_checked" >
                   <span class="lever"></span>
                   On
                 </label>
@@ -49,7 +49,7 @@
             @endif
           @endif
         @endforeach
-        <td>
+      </td>
       </tr>
       @endforeach
     </table>
@@ -72,7 +72,7 @@
         <td>
         @foreach($domain_listed_upload as $domain)
           @if( $domain->domain_dnsbls_id == $domain_dnsbl -> id )
-            {{ $domain->domain }}</br>
+            {{$domain->domain}}</br>
           @endif
         @endforeach
         </td>
