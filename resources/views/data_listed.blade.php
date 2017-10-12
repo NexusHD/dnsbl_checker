@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>asdasdadasfasfasdf
+  <body>
     <?php $y=1 ?>
     @foreach($ip_listed_upload as $ip)
       @if (!empty($ip) && $y)
