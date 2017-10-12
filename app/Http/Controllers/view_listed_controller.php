@@ -101,7 +101,7 @@ class view_listed_controller extends Controller
       $id = $request->id;
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
-      $ip_listed_upload=user::select('ips.ip_address', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ')
+      $ip_listed_upload=user::select('ips.ip_address', 'ip_listeds.ip_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'ip_listeds.checked')
       	                     ->join('data_ip_users', 'users.id', '=', 'data_ip_users.users_id')
                              ->join('ips', 'data_ip_users.ips_id', '=', 'ips.id')
                              ->join('ip_listeds', 'ips.id', '=', 'ip_listeds.ips_id')
@@ -111,7 +111,7 @@ class view_listed_controller extends Controller
                              ->where('data_ip_users.active', '=', '1')
                              ->where('data_uploads.id', '=', $id)
                              ->get();
-      $domain_listed_upload=user::select('domains.domain', 'domains.id', 'domain_listeds.domain_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ')
+      $domain_listed_upload=user::select('domains.domain', 'domains.id', 'domain_listeds.domain_dnsbls_id', 'data_uploads.original_name', 'data_uploads.data_typ', 'domain_listeds.checked')
       	                         ->join('data_domain_users', 'users.id', '=', 'data_domain_users.users_id')
                                  ->join('domains', 'data_domain_users.domains_id', '=', 'domains.id')
                                  ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')

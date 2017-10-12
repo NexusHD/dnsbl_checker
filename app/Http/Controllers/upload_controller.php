@@ -205,10 +205,6 @@ class upload_controller extends Controller
             }
             if ($extension==='.xlsx') {
                 $filename=$destinationPath.'\\'.$server_dateiname.".xlsx";
-
-
-
-
                 $xlsx = new XLSXReader($filename);                                                                                //kein timeout
                 $domain = array();
                 $ip     = array();

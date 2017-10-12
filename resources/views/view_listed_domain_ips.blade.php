@@ -37,7 +37,7 @@
         </td>
         <td>
         @foreach($domain_listed_query as $domain)
-          @if($domain->ip_dnsbls_id==$domain_dnsbl_query->id)
+          @if($domain->domain_dnsbls_id==$domain_dnsbl_query->id)
             @if($domain -> checked)
               <div class="switch">
                 <label>

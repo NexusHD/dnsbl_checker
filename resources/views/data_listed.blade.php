@@ -25,6 +25,31 @@
           @endif
         @endforeach
         </td>
+</td>
+        @foreach($ip_listed_upload as $ip)
+          @if($ip->ip_dnsbls_id==$ip->id)
+            @if($ip -> checked)
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" checked="checked" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="domain_checked">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @else
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="domain_checked" >
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @endif
+          @endif
+        @endforeach
+        <td>
       </tr>
       @endforeach
     </table>
@@ -51,6 +76,31 @@
           @endif
         @endforeach
         </td>
+        <td>
+        @foreach($domain_listed_upload as $domain)
+          @if($domain->ip_dnsbls_id==$domain_dnsbl->id)
+            @if($domain -> checked)
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @else
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked" >
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @endif
+          @endif
+        @endforeach
+      </td>
       </tr>
       @endforeach
     </table>
