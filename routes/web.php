@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/add_ip_domain', function () {
+    return view('/add_ip_domain');
+});
 
 Auth::routes();
 Route::get('/data_listed/{id}', 'view_listed_controller@show_listed_data');
@@ -23,7 +26,7 @@ Route::get('/quit_scan', 'scan_controller@quit_scan');
 Route::get('/delet', 'domain_controller@show_del_domain');
 Route::get('/active', 'domain_controller@show_active_domain');
 Route::get('/show', 'view_listed_controller@show_listeds');
-Route::get('/show/{id}', 'view_listed_controller@detail_listed');
+Route::post('/show/detail', 'view_listed_controller@show_listed_data');
 Route::post('/active', 'domain_controller@show_active_domain_w_input');
 Route::post('/delet', 'domain_controller@show_del_domain_w_input');
 Route::get('/logout', 'HomeController@logout');

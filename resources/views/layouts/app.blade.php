@@ -61,7 +61,8 @@
         <div id="current-menu" data-menu="default">
           <nav><a class="morph menu small mob-menu button-collapse top-nav waves-effect waves-light circle hide-on-large-only" href="javascript:void(0)" id="sidebar-default-collapse" data-activates="nav-default"><span><span class="s1"></span><span class="s2"></span><span class="s3"></span></span></a>
             <div class="nav-wrapper">
-              <!-- LOGO Set--><a class="animated brand-logo hide-on-large-only nav-logo" href="javascript:void(0)"><i class="material-icons logo-icon left base-text">whatshot</i><span class="left" style="margin-left:20px;">DM-SPAM</span></a><a class="animated brand-logo hide-on-med-and-down defaultMenu-logo" href="javascript:void(0)"><i class="material-icons logo-icon left white-text">whatshot</i><span class="left" style="margin-left:20px;">DM-SPAM</span></a>
+              <!-- LOGO Set--><a class="animated brand-logo hide-on-large-only nav-logo" href="javascript:void(0)"><i class="material-icons logo-icon left base-text">whatshot</i><span class="left" style="margin-left:20px;">SWISS LIST</span></a>
+              <a class="animated brand-logo hide-on-med-and-down defaultMenu-logo" href="javascript:void(0)"><i class="material-icons logo-icon left white-text">whatshot</i><span class="left" style="margin-left:20px;">SWISS LIST</span></a>
               <!-- Left menu options at top-nav-->
               <ul class="left topnav-Menu-ls hide-on-med-and-down">
                 <li><a class="morph small iconizedToggle waves-effect waves-light" href="javascript:void(0)"><span><span class="s1"></span><span class="s2"></span><span class="s3"></span></span></a>
@@ -99,7 +100,7 @@
           <li><a class="collapsible-header no-col-body waves-effect waves-set active current" href="home"><i class="material-icons">dashboard</i><span>Home</span></a></li>
           <li class="navigation-header"><span class="no-col-body">Navbar</span><i class="material-icons tooltipped" data-position="right" data-delay="50" data-tooltip="CSS Properties">more_horiz</i>
           </li>
-          <li><a class="collapsible-header no-col-body waves-effect waves-set"><i class="material-icons">text_format</i><span>IP/Domain Hinzufügen</span></a></li>
+          <li id="add_ip_domain" name="li"><a class="collapsible-header no-col-body waves-effect waves-set"><i class="material-icons">text_format</i><span>IP/Domain Hinzufügen</span></a></li>
           <li id="active" name="li"><a class="collapsible-header no-col-body waves-effect waves-set"><i class="material-icons">list</i><span>IP/Domain Verwalten</span></a></li>
           <li id="show" name="li"><a class="collapsible-header no-col-body waves-effect waves-set"><i class="material-icons">view_list</i><span>Gelistete IPs/Domains</span></a></li>
         </ul>
