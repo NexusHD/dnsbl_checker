@@ -27,8 +27,13 @@ Route::get('/delet', 'domain_controller@show_del_domain');
 Route::get('/active', 'domain_controller@show_active_domain');
 Route::get('/show', 'view_listed_controller@show_listeds');
 Route::post('/show/detail', 'view_listed_controller@show_listed_data');
+Route::get('/show/detail/redirect', 'view_listed_controller@show_listed_data_redirect');
 Route::post('/active', 'domain_controller@show_active_domain_w_input');
 Route::post('/delet', 'domain_controller@show_del_domain_w_input');
+
+Route::post('/ip_data_checked', 'upload_controller@ip_data_checked');
+Route::post('/domain_data_checked', 'upload_controller@domain_data_checked');
+
 Route::get('/logout', 'HomeController@logout');
 
 Route::get('/home', 'HomeController@index');

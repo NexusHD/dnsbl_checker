@@ -23,6 +23,7 @@ use App\domain_dnsbl;
 use App\domain_listed;
 use App\domain_user;
 use App\XLSXReader;
+use Session;
 
 class upload_controller extends Controller
 {
@@ -367,5 +368,51 @@ class upload_controller extends Controller
       data_upload::where('id', $id)
                 ->update(['deleted' => 1]);
       return redirect('/active');
+  }
+  public function ip_data_checked(Request $request)
+  {
+      $id_user = Auth::user()->id;
+      $id = $request->id;
+      $dnsbl_id = $request->dnsbl_id;
+      $select_active=ip_listed::select('checked')
+                              ->join('ips', 'ip_listeds.ips_id', '=', 'ips.id')
+                              ->join('ip_users', 'ips.id', '=', 'ip_users.ips_id')
+                              ->where('ip_users.ips_id', $id)
+                              ->where('ip_listeds.ip_dnsbls_id', $dnsbl_id)
+                              ->where('users_id', $id_user)
+                              ->get();
+      if (isset($select_active['0']['checked']) && $select_active['0']['checked']==1) {
+          ip_listed::where('ips_id', $id)
+                    ->where('ip_dnsbls_id', $dnsbl_id)
+                    ->update(['checked' => 0, 'updated_at' => DB::raw('NOW()')]);
+      } else {
+          ip_listed::where('ips_id', $id)
+                    ->where('ip_dnsbls_id', $dnsbl_id)
+                    ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
+      }
+      return redirect('/show/detail/redirect');
+  }
+  public function domain_data_checked(Request $request)
+  {
+    $id_user = Auth::user()->id;
+    $id = $request->id;
+    $dnsbl_id = $request->dnsbl_id;
+    $select_active=domain_listed::select('checked')
+                                 ->join('domains', 'domain_listeds.domain_id', '=', 'domains.id')
+                                 ->join('domain_users', 'domains.id', '=', 'domain_users.domain_id')
+                                 ->where('domain_users.domain_id', $id)
+                                 ->where('domain_listeds.domain_dnsbls_id', $dnsbl_id)
+                                 ->where('users_id', $id_user)
+                                 ->get();
+    if (isset($select_active['0']['checked']) && $select_active['0']['checked']==1) {
+      domain_listed::where('domain_id', $id)
+                    ->where('domain_dnsbls_id', $dnsbl_id)
+                    ->update(['checked' => 0, 'updated_at' => DB::raw('NOW()')]);
+    }else{
+      domain_listed::where('domain_id', $id)
+                    ->where('domain_dnsbls_id', $dnsbl_id)
+                    ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
+    }
+    return redirect('/show/detail/redirect');
   }
 }
