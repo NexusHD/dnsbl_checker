@@ -397,19 +397,19 @@ class upload_controller extends Controller
     $id_user = Auth::user()->id;
     $id = $request->id;
     $dnsbl_id = $request->dnsbl_id;
-    $select_active=domain_listeds::select('checked')
+    $select_active=domain_listed::select('checked')
                                  ->join('domains', 'domain_listeds.domain_id', '=', 'domains.id')
-                                 ->join('domains_users', 'domains.id', '=', 'domains_users.domain_id')
-                                 ->where('domains_users.domain_id', $id)
+                                 ->join('domain_users', 'domains.id', '=', 'domain_users.domain_id')
+                                 ->where('domain_users.domain_id', $id)
                                  ->where('domain_listeds.domain_dnsbls_id', $dnsbl_id)
                                  ->where('users_id', $id_user)
                                  ->get();
-    if ($select_active['0']['active']==1){
-      domain_listeds::where('domain_id', $id)
+    if (isset($select_active['0']['checked']) && $select_active['0']['checked']==1) {
+      domain_listed::where('domain_id', $id)
                     ->where('domain_dnsbls_id', $dnsbl_id)
-                    ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
+                    ->update(['checked' => 0, 'updated_at' => DB::raw('NOW()')]);
     }else{
-      domain_listeds::where('domain_id', $id)
+      domain_listed::where('domain_id', $id)
                     ->where('domain_dnsbls_id', $dnsbl_id)
                     ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
     }
