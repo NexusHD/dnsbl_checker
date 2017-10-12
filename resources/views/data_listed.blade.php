@@ -72,7 +72,7 @@
         <td>
         @foreach($domain_listed_upload as $domain)
           @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
-            {{$domain->domain}}</br>{{ $domain->id }}/{{$domain_dnsbl->id}}</br>
+            {{$domain->domain}}</br>
           @endif
         @endforeach
         </td>

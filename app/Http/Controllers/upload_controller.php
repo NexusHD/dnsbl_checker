@@ -399,8 +399,8 @@ class upload_controller extends Controller
     $dnsbl_id = $request->dnsbl_id;
     $select_active=domain_listed::select('checked')
                                  ->join('domains', 'domain_listeds.domain_id', '=', 'domains.id')
-                                 ->join('domain_users', 'domains.id', '=', 'domain_users.domain_id')
-                                 ->where('domain_users.domain_id', $id)
+                                 ->join('data_domain_users', 'domains.id', '=', 'data_domain_users.domains_id')
+                                 ->where('domain_listeds.domain_id', $id)
                                  ->where('domain_listeds.domain_dnsbls_id', $dnsbl_id)
                                  ->where('users_id', $id_user)
                                  ->get();
