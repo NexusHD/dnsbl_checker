@@ -27,15 +27,8 @@
         </td>
         <td>
         @foreach($ip_listed_upload as $ip)
-<<<<<<< HEAD
-          @if($ip->ip_dnsbls_id==$ip->id)
-          {{$ip->checked}}
-          
-            @if($ip -> checked)
-=======
           @if( $ip -> ip_dnsbls_id == $ip_dnsbl -> id )
             @if($ip->checked)
->>>>>>> 073dde8b8d51b06a83c4ea5c5f95ea219947da1e
               <div class="switch">
                 <label>
                   Off
