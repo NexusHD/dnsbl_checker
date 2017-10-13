@@ -127,6 +127,7 @@ class view_listed_controller extends Controller
     }
     public function show_listed_data(Request $request){
       $id = $request->id;
+      $id_user = Auth::user()->id;
       Session::reflash();
       Session::put('id_detail_listed_data_ip_domain', $id);
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
@@ -171,6 +172,7 @@ class view_listed_controller extends Controller
       return view('data_listed', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'ip_listed_upload', 'domain_listed_upload', 'sub_ip_domain_listed_query'));
     }
     public function show_listed_data_redirect(){
+      $id_user = Auth::user()->id;
       $id = Session::get('id_detail_listed_data_ip_domain');
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
