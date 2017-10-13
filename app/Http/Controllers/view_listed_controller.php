@@ -13,12 +13,10 @@ use Session;
 class view_listed_controller extends Controller
 {
     public function show_listeds(){
-      $domain_result=array();
       $id_user = Auth::user()->id;
-
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
-      $ip_listed_query=user::select('ips.ip_address', 'ip_listeds.ip_dnsbls_id', 'ip_listeds.ips_id', 'checked')
+      $ip_listed_query=user::select('ips.ip_address', 'ips.id', 'ip_listeds.ip_dnsbls_id', 'ip_listeds.ips_id', 'checked')
       	                   ->join('ip_users', 'users.id', '=', 'ip_users.users_id')
                            ->join('ips', 'ip_users.ips_id', '=', 'ips.id')
                            ->join('ip_listeds', 'ips.id', '=', 'ip_listeds.ips_id')

@@ -42,7 +42,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl_query->id}}" class="domain_checked">
+                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked">
                   <span class="lever"></span>
                   On
                 </label>
@@ -51,7 +51,7 @@
               <div class="switch">
                 <label>
                   Off
-                  <input type="checkbox" value="{{ $domain->id }}/{{$domain_dnsbl_query->id}}" class="domain_checked" >
+                  <input type="checkbox" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked" >
                   <span class="lever"></span>
                   On
                 </label>
