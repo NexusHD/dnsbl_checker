@@ -35,7 +35,7 @@ class domain_controller extends Controller
       $domain=$_GET['domain'];
       $id_user = Auth::user()->id;
       if (!gethostbynamel($domain)){      //prüfen, ob es eine valide ipv4 oder domaine ist
-       return redirect()->route('home', ['error' => 1]);
+       return redirect()->action('HomeController@index', ['error'=>'1']);
       }
       // $domain = 'Hant@Peter.Dierter';
       $id_domain=domain::select('id')->where('domain', '=', $domain)->get();
@@ -45,12 +45,12 @@ class domain_controller extends Controller
 
           if ($domain_user[0]['deleted']==1) {
             domain_user::where('domain_id', '=', $id_domain[0]['id'])->update(['deleted' => 0, 'active' => 1]);
-            return redirect()->route('home');
+            return redirect()->action('HomeController@index', ['error'=>'2']);
           }
 
 
           if (isset($domain_user[0]['users_id'])) {
-              return redirect()->route('home', ['error' => 2]);
+              return redirect()->action('HomeController@index', ['error'=>'3']);
           } else {
               domain_user::insert(['domain_id' => $id_domain[0]['id'], 'users_id' => $id_user, 'domain_users.updated_at' => DB::raw('NOW()'), 'domain_users.created_at' => DB::raw('NOW()')]);
           }
@@ -65,6 +65,7 @@ class domain_controller extends Controller
           $subdomains=gethostbynamel($domain);                    //lößt domain in subdomain IPs auf
           foreach ($subdomains as $subdomain_ip) {
           $subdomain = gethostbyaddr($subdomain_ip);
+
           $id_subdomain_ip = sub_ip::insertGetId(['sub_ip' => $subdomain_ip, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
           $id_subdomain = subdomain::insertGetId(['sub_domain' => $subdomain, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
           subdomain_subip_domain::insert(['domain_id' => $id_domain, 'sub_ip_id' => $id_subdomain_ip, 'subdomain_id' => $id_subdomain, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
@@ -79,7 +80,7 @@ class domain_controller extends Controller
           }
           }
         }
-        return redirect()->route('home');
+        return redirect()->action('HomeController@index');
     }
 
     /**
