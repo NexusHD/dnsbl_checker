@@ -376,8 +376,8 @@ class upload_controller extends Controller
       $dnsbl_id = $request->dnsbl_id;
       $select_active=ip_listed::select('checked')
                               ->join('ips', 'ip_listeds.ips_id', '=', 'ips.id')
-                              ->join('ip_users', 'ips.id', '=', 'ip_users.ips_id')
-                              ->where('ip_users.ips_id', $id)
+                              ->join('data_ip_users', 'ips.id', '=', 'data_ip_users.ips_id')
+                              ->where('data_ip_users.ips_id', $id)
                               ->where('ip_listeds.ip_dnsbls_id', $dnsbl_id)
                               ->where('users_id', $id_user)
                               ->get();
