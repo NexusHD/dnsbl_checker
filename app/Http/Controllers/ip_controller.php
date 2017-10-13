@@ -27,11 +27,11 @@ class ip_controller extends Controller
 
             if (isset($ip_user[0]['deleted']) && $ip_user[0]['deleted']==1) {
               ip_user::where('ips_id', '=', $id_ip[0]['id'])->update(['deleted' => 0]);
-              return redirect()->route('home');
+              return redirect()->action('HomeController@index', ['error'=>'2']);
             }
 
             if (isset($ip_user[0]['users_id'])) {
-              return redirect()->route('home', ['error' => 2]);
+              return redirect()->action('HomeController@index', ['error'=>'3']);
             }
 
 
@@ -58,7 +58,7 @@ class ip_controller extends Controller
                 ip_listed::insert(['ips_id' => $id_ip, 'ip_dnsbls_id' => $id['id'], 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
             }
         }
-        return redirect()->route('home');
+        return redirect()->action('HomeController@index');
     }
     public function update_active(Request $request)
     {

@@ -133,5 +133,7 @@
     <script type="text/javascript" src="plugins/charts/google-chart/jsapi.js"></script>
     <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoqM2ajGLymYCyt14bhxOEfcjHDShZDm8" type="text/javascript"></script>
     <script src="js/dashboard.js"></script>
+    @yield('Toast');
+
   </body>
 </html>
