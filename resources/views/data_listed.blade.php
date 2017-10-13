@@ -71,8 +71,19 @@
        <td><a href="{{ $domain_dnsbl->link }}" target="_blank">{{ $domain_dnsbl->name }}</a></br>{{ $domain_dnsbl->query }}</td>
         <td>
         @foreach($domain_listed_upload as $domain)
+        <?php $x=0 ?>
+         @foreach($sub_ip_domain_listed_query as $sub_ip_domain)
+          @if ($sub_ip_domain->id == $domain->id)
+          <?php $x=1 ?>
+          @endif
+         @endforeach
           @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
-            {{$domain->domain}}</br>
+            @if($x)
+              <a id="{{$domain->id}}" class="sub_domain_ip_detail" style="cursor: pointer;">{{ $domain->domain }}</a>
+            @else
+              {{ $domain->domain }}
+            @endif
+          </br>
           @endif
         @endforeach
         </td>

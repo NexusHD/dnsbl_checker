@@ -151,7 +151,24 @@ class view_listed_controller extends Controller
                                  ->where('data_domain_users.active', '=', '1')
                                  ->where('data_uploads.id', '=', $id)
                                  ->get();
-      return view('data_listed', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'ip_listed_upload', 'domain_listed_upload'));
+      $sub_ip_domain_listed_query=user::select('domains.domain', 'domains.id', 'domain_listeds.domain_dnsbls_id')
+                                     ->join('domain_users', 'users.id', '=', 'domain_users.users_id')
+                                     ->join('domains', 'domain_users.domain_id', '=', 'domains.id')
+                                     ->join('domain_listeds', 'domains.id', '=', 'domain_listeds.domain_id')
+                                     ->join('subdomain_subip_domains', 'domains.id', '=', 'subdomain_subip_domains.domain_id')
+                                     ->join('subdomains', 'subdomain_subip_domains.subdomain_id', '=', 'subdomains.id')
+                                     ->join('sub_domain_listeds', 'subdomains.id', '=', 'subdomains_id')
+                                     ->join('sub_ips', 'subdomain_subip_domains.sub_ip_id', '=', 'sub_ips.id')
+                                     ->join('sub_ip_listeds', 'sub_ips.id', '=', 'sub_ip_listeds.sub_ips_id')
+                                     ->where('domain_listeds.listed', '=', '1')
+                                     ->where('users.id', '=', $id_user)
+                                     ->where('domain_users.active', '=', '1')
+                                     ->where('domain_users.deleted', '=', '0')
+                                     ->where('sub_domain_listeds.listed', '=', '1')
+                                     ->orWhere('sub_ip_listeds.listed', '=', '1')
+                                     ->distinct()
+                                     ->get();
+      return view('data_listed', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'ip_listed_upload', 'domain_listed_upload', 'sub_ip_domain_listed_query'));
     }
     public function show_listed_data_redirect(){
       $id = Session::get('id_detail_listed_data_ip_domain');
