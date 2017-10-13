@@ -12,14 +12,59 @@
 @endsection
 @section('Toast')
 <script type="text/javascript">
+@if( app('request')->input('already'))
+var already = {{app('request')->input('already')}};
+@else
+var already = 0;
 
-var error = {{ app('request')->input('error') }};
-if(typeof(error) != "undefined" && error !== null){
+@endif
 
+@if( app('request')->input('reaktiv'))
+var reaktiv = {{app('request')->input('reaktiv')}};
+@else
+var reaktiv = 0;
 
+@endif
+
+@if(app('request')->input('error'))
+var error = {{app('request')->input('error')}};
+@else
+var error = 0;
+
+@endif
 
 function DialogZeigen()
 {
+
+  if (reaktiv > 0)
+  (function () {
+      $('.carousel.carousel-slider').carousel({ fullWidth: true });
+      // JUST TO SHOW TOAST ON LOAD
+      $(window).on('load', function () {
+          setTimeout(function () {
+              var $toastContent = $('<span>Hey, Dude you have '+reaktiv+' reaktive</span>');
+              Materialize.toast($toastContent, 4000, '', function () {
+              });
+          }, 2011);
+      });
+  })
+  ();
+}
+
+if (already > 0){
+  (function () {
+    $('.carousel.carousel-slider').carousel({ fullWidth: true });
+    // JUST TO SHOW TOAST ON LOAD
+    $(window).on('load', function () {
+      setTimeout(function () {
+        var $toastContent = $('<span>Hey, Dude you have '+already+' already in the database</span>');
+        Materialize.toast($toastContent, 4000, '', function () {
+        });
+      }, 2011);
+    });
+  })
+  ();
+}
 
     if (error == 1){
     (function () {
@@ -66,10 +111,11 @@ function DialogZeigen()
     ();
 
   }
-  }
+
+  
 
 DialogZeigen();
-}
+
 
 </script>
 @endsection

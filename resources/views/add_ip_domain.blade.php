@@ -160,7 +160,7 @@
                       <div class="file-field input-field">
                         <div class="btn">
                           <span>File</span>
-                          <input type="file">
+                          <input type="file" name="upload">
                         </div>
                         <div class="file-path-wrapper">
                           <input class="file-path validate" type="text" placeholder="Laden Sie eine CSV oder eine XLSX Datei hoch">

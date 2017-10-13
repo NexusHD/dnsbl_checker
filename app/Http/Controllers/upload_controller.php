@@ -308,6 +308,7 @@ class upload_controller extends Controller
                           $subdomains=gethostbynamel($domain);                    //lößt domain in subdomain IPs auf
                           foreach ($subdomains as $subdomain_ip) {
                               $subdomain = gethostbyaddr($subdomain_ip);
+
                               $id_subdomain_ip = sub_ip::insertGetId(['sub_ip' => $subdomain_ip, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
                               $id_subdomain = subdomain::insertGetId(['sub_domain' => $subdomain, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
                               subdomain_subip_domain::insert(['domain_id' => $id_domain, 'sub_ip_id' => $id_subdomain_ip, 'subdomain_id' => $id_subdomain, 'updated_at' => DB::raw('NOW()'), 'created_at' => DB::raw('NOW()')]);
@@ -337,7 +338,7 @@ class upload_controller extends Controller
 
 
         //echo $id_data;
-        return view('home', compact('already', 'reaktiv'));
+        return redirect()->action('HomeController@index', compact('already', 'reaktiv'));
     }
   }
 
