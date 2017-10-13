@@ -24,6 +24,31 @@
           @endif
         @endforeach
         </td>
+        <td>
+        @foreach($subdomain_listed_query as $domain)
+          @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
+            @if($domain -> checked)
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" checked="checked" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @else
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" value="{{ $domain->id }}/{{$domain_dnsbl->id}}" class="domain_checked" >
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @endif
+          @endif
+        @endforeach
+        </td>
       </tr>
       @endforeach
     </table>
@@ -46,6 +71,31 @@
         @foreach($sub_ip_listed_query as $sub_ip)
           @if( $sub_ip -> ip_dnsbls_id == $ip_dnsbl -> id )
             {{ $sub_ip->sub_ip }}</br>
+          @endif
+        @endforeach
+        </td>
+        <td>
+        @foreach($sub_ip_listed_query as $ip)
+          @if($ip->ip_dnsbls_id==$ip_dnsbl->id)
+            @if($ip -> checked)
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" checked="checked" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="ip_checked">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @else
+              <div class="switch">
+                <label>
+                  Off
+                  <input type="checkbox" value="{{ $ip->id }}/{{$ip_dnsbl->id}}" class="ip_checked">
+                  <span class="lever"></span>
+                  On
+                </label>
+              </div>
+            @endif
           @endif
         @endforeach
         </td>
@@ -82,6 +132,52 @@
     console.log("complete");
     });
     });
+
+
+
+    $('input.domain_checked').click(function() {
+    var str  = $(this).val();
+    var id   = str.split('/');
+    $.ajax({
+    url: 'sub_domain_checked',
+    type: 'POST',
+    dataType: 'html',
+    data:{id: id[0], dnsbl_id: id[1]}
+    })
+    .done(function(t) {
+    console.log("success");
+    $('div#ergebniss').html(t);
+    })
+    .fail(function() {
+    console.log("error");
+    })
+    .always(function() {
+    console.log("complete");
+    });
+    });
+    ////////////////////////////////////////////////////////////////////////////////
+    $('input.ip_checked').click(function() {
+    var str  = $(this).val();
+    var id   = str.split('/');
+    console.log(id[1]);
+    $.ajax({
+    url: 'sub_ip_checked',
+    type: 'POST',
+    dataType: 'html',
+    data:{id: id[0], dnsbl_id: id[1]}
+    })
+    .done(function(t) {
+    console.log("success");
+    $('div#ergebniss').html(t);
+    })
+    .fail(function() {
+    console.log("error");
+    })
+    .always(function() {
+    console.log("complete");
+    });
+    });
+
     });
     </script>
   </body>

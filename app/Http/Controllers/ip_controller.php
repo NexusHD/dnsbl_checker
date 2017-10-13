@@ -8,6 +8,7 @@ use App\ip_user;
 use App\ip;
 use App\ip_listed;
 use App\ip_dnsbl;
+use App\sub_ip_listed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -208,5 +209,26 @@ class ip_controller extends Controller
                       ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
         }
         return redirect('/show');
+    }
+    public function sub_ip_checked(Request $request)
+    {
+        $id_user = Auth::user()->id;
+        $id = $request->id;
+        $dnsbl_id = $request->dnsbl_id;
+
+        $select_active=sub_ip_listed::select('checked')
+                                    ->where('sub_ips_id', $id)
+                                    ->where('ip_dnsbls_id', $dnsbl_id)
+                                    ->get();
+        if (isset($select_active['0']['checked']) && $select_active['0']['checked']==1) {
+            sub_ip_listed::where('sub_ips_id', $id)
+                         ->where('ip_dnsbls_id', $dnsbl_id)
+                         ->update(['checked' => 0, 'updated_at' => DB::raw('NOW()')]);
+        } else {
+            sub_ip_listed::where('sub_ips_id', $id)
+                         ->where('ip_dnsbls_id', $dnsbl_id)
+                         ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
+        }
+        return redirect('/show/sub_ip_domain_detail/return');
     }
 }

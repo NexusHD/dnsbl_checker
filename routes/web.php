@@ -28,12 +28,16 @@ Route::get('/active', 'domain_controller@show_active_domain');
 Route::get('/show', 'view_listed_controller@show_listeds');
 Route::post('/show/detail', 'view_listed_controller@show_listed_data');
 Route::post('/show/sub_ip_domain_detail', 'view_listed_controller@detail_listed');
+Route::get('/show/sub_ip_domain_detail/return', 'view_listed_controller@detail_listed_return');
 Route::get('/show/detail/redirect', 'view_listed_controller@show_listed_data_redirect');
 Route::post('/active', 'domain_controller@show_active_domain_w_input');
 Route::post('/delet', 'domain_controller@show_del_domain_w_input');
 
 Route::post('/ip_data_checked', 'upload_controller@ip_data_checked');
 Route::post('/domain_data_checked', 'upload_controller@domain_data_checked');
+
+Route::post('/sub_ip_checked', 'ip_controller@sub_ip_checked');
+Route::post('/sub_domain_checked', 'domain_controller@sub_domain_checked');
 
 Route::get('/logout', 'HomeController@logout');
 

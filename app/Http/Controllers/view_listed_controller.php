@@ -73,9 +73,11 @@ class view_listed_controller extends Controller
     }
     public function detail_listed(Request $request){
       $id = $request->id;
+      Session::reflash();
+      Session::put('id_detail_listed_sub_ip_domain', $id);
       $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
       $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
-      $subdomain_listed_query=domain::select('subdomains.sub_domain', 'subdomains.id', 'sub_domain_listeds.domain_dnsbls_id')
+      $subdomain_listed_query=domain::select('subdomains.sub_domain', 'subdomains.id', 'sub_domain_listeds.domain_dnsbls_id', 'sub_domain_listeds.checked')
                                     ->join('subdomain_subip_domains', 'domains.id', '=', 'subdomain_subip_domains.domain_id')
                                     ->join('subdomains', 'subdomain_subip_domains.subdomain_id', '=', 'subdomains.id')
                                     ->join('sub_domain_listeds', 'subdomains.id', '=', 'sub_domain_listeds.subdomains_id')
@@ -85,7 +87,33 @@ class view_listed_controller extends Controller
                                     ->where('sub_domain_listeds.listed', '=', '1')
                                     ->where('domains.id', '=', $id)
                                     ->get();
-      $sub_ip_listed_query=domain::select('sub_ips.sub_ip','sub_ips.id', 'sub_ip_listeds.ip_dnsbls_id')
+      $sub_ip_listed_query=domain::select('sub_ips.sub_ip','sub_ips.id', 'sub_ip_listeds.ip_dnsbls_id', 'sub_ip_listeds.checked')
+                                 ->join('subdomain_subip_domains', 'domains.id', '=', 'subdomain_subip_domains.domain_id')
+                                 ->join('sub_ips', 'subdomain_subip_domains.sub_ip_id', '=', 'sub_ips.id')
+                                 ->join('sub_ip_listeds', 'sub_ips.id', '=', 'sub_ip_listeds.sub_ips_id')
+                                 ->join('domain_users', 'domains.id', '=', 'domain_users.domain_id')
+                                 ->where('domain_users.deleted', '=', '0')
+                                 ->where('domain_users.active', '=', '1')
+                                 ->where('sub_ip_listeds.listed', '=', '1')
+                                 ->where('domains.id', '=', $id)
+                                 ->get();
+      return view('view_listed_sub_domain_ip', compact('domain_dnsbl_query', 'ip_dnsbl_query', 'subdomain_listed_query', 'sub_ip_listed_query'));
+    }
+    public function detail_listed_return(){
+      $id = Session::get('id_detail_listed_sub_ip_domain');
+      $domain_dnsbl_query=domain_dnsbl::select('query', 'id', 'link', 'name')->get();
+      $ip_dnsbl_query=ip_dnsbl::select('query', 'id', 'link', 'name')->get();
+      $subdomain_listed_query=domain::select('subdomains.sub_domain', 'subdomains.id', 'sub_domain_listeds.domain_dnsbls_id', 'sub_domain_listeds.checked')
+                                    ->join('subdomain_subip_domains', 'domains.id', '=', 'subdomain_subip_domains.domain_id')
+                                    ->join('subdomains', 'subdomain_subip_domains.subdomain_id', '=', 'subdomains.id')
+                                    ->join('sub_domain_listeds', 'subdomains.id', '=', 'sub_domain_listeds.subdomains_id')
+                                    ->join('domain_users', 'domains.id', '=', 'domain_users.domain_id')
+                                    ->where('domain_users.deleted', '=', '0')
+                                    ->where('domain_users.active', '=', '1')
+                                    ->where('sub_domain_listeds.listed', '=', '1')
+                                    ->where('domains.id', '=', $id)
+                                    ->get();
+      $sub_ip_listed_query=domain::select('sub_ips.sub_ip','sub_ips.id', 'sub_ip_listeds.ip_dnsbls_id', 'sub_ip_listeds.checked')
                                  ->join('subdomain_subip_domains', 'domains.id', '=', 'subdomain_subip_domains.domain_id')
                                  ->join('sub_ips', 'subdomain_subip_domains.sub_ip_id', '=', 'sub_ips.id')
                                  ->join('sub_ip_listeds', 'sub_ips.id', '=', 'sub_ip_listeds.sub_ips_id')

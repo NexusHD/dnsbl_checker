@@ -240,4 +240,24 @@ class domain_controller extends Controller
        }
        return redirect('/show');
      }
+     public function sub_domain_checked(Request $request)
+     {
+         $id_user = Auth::user()->id;
+         $id = $request->id;
+         $dnsbl_id = $request->dnsbl_id;
+         $select_active=sub_domain_listed::select('checked')
+                                         ->where('subdomains_id', $id)
+                                         ->where('domain_dnsbls_id', $dnsbl_id)
+                                         ->get();
+         if (isset($select_active['0']['checked']) && $select_active['0']['checked']==1) {
+             sub_domain_listed::where('subdomains_id', $id)
+                              ->where('domain_dnsbls_id', $dnsbl_id)
+                              ->update(['checked' => 0, 'updated_at' => DB::raw('NOW()')]);
+         } else {
+             sub_domain_listed::where('subdomains_id', $id)
+                              ->where('domain_dnsbls_id', $dnsbl_id)
+                              ->update(['checked' => 1, 'updated_at' => DB::raw('NOW()')]);
+         }
+         return redirect('/show/sub_ip_domain_detail/return');
+     }
 }
