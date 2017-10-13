@@ -27,7 +27,7 @@
          @endforeach
           @if($domain->domain_dnsbls_id==$domain_dnsbl->id)
             @if($x)
-              <a href="/show/{{ $domain->id }}">{{ $domain->domain }}</a>
+              <a id="{{$domain->id}}" class="sub_domain_ip_detail" style="cursor: pointer;">{{ $domain->domain }}</a>
             @else
               {{ $domain->domain }}
             @endif
@@ -205,6 +205,27 @@ $('.data_detail_ansicht').click(function() {
  var id = $(this).attr('id');
 $.ajax({
   url: 'show/detail',
+  type: 'POST',
+  dataType: 'html',
+  data:{id: id}
+})
+.done(function(t) {
+  console.log("success");
+  $('div#ergebniss').html(t);
+})
+.fail(function() {
+  console.log("error");
+})
+.always(function() {
+  console.log("complete");
+});
+});
+
+$('.sub_domain_ip_detail').click(function() {
+  $('div#ergebniss').html("warte");
+ var id = $(this).attr('id');
+$.ajax({
+  url: 'show/sub_ip_domain_detail',
   type: 'POST',
   dataType: 'html',
   data:{id: id}
