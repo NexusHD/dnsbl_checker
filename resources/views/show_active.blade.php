@@ -150,7 +150,7 @@
                   <div class="switch">
                     <label>
                       Off
-                    <input type="checkbox" class="" id="cb{{$ip->id}}" checked="checked" value="{{$ip->id}}"/>
+                    <input type="checkbox" class="ip_data_checked" id="cb{{$ip->id}}" checked="checked" value="{{$ip->id}}"/>
                     <span class="lever"></span>
                     On
                   </label>
@@ -161,7 +161,7 @@
                   <div class="switch">
                     <label>
                       Off
-                    <input type="checkbox" id="cb{{$ip->id}}" value="{{$ip->id}}"/>
+                    <input type="checkbox" class="ip_data_checked" id="cb{{$ip->id}}" value="{{$ip->id}}"/>
                     <span class="lever"></span>
                     On
                   </label>
